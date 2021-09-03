@@ -163,12 +163,13 @@ elif args.function == 'finetune':
     ### START CODE HERE
     #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
     text = dataset.NameDataset(open(args.finetune_corpus_path).read(),pretrain_dataset)
-    device = "cuda:0"
+    
     if args.reading_params_path is None:
         model = model.to(device)
         my_trainer = trainer.Trainer(model,text,None,tconf)
     else: 
-        model = model.load_state_dict(torch.load(args.reading_params_path))
+        device = "cuda:0"
+        model.load_state_dict(torch.load(args.reading_params_path))
         model = model.to(device)
         my_trainer = trainer.Trainer(model,text,None,tconf)
     
