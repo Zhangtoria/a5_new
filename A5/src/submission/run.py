@@ -163,6 +163,7 @@ elif args.function == 'finetune':
         model = model.GPT(mconf)
         model = model.to(device)
     else: 
+        model = model.GPT(*args, **kwargs)
         model.load_state_dict(torch.load(args.reading_params_path))
         model = model.to(device)
     text = dataset.NameDataset(open(args.finetune_corpus_path, encoding='utf-8').read(),pretrain_dataset)
