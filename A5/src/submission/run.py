@@ -162,7 +162,7 @@ elif args.function == 'finetune':
 
     ### START CODE HERE
     #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
-    text = dataset.NameDataset(open(args.finetune_corpus_path, encoding='utf-8').read(),pretrain_dataset)
+    text = dataset.NameDataset(open(args.finetune_corpus_path).read(),pretrain_dataset)
     
     if args.reading_params_path is None:
         my_trainer = trainer.Trainer(model,text,None,tconf)
