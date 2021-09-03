@@ -71,11 +71,7 @@ if args.variant == 'vanilla':
     #model = model.GPT(mconf)
     model = model.GPT(mconf)
     model = model.to(device)
-    tconf = trainer.TrainerConfig(max_epochs=75, batch_size=256, learning_rate=6e-4, lr_decay=True, 
-                      warmup_tokens=512*20, 
-                      final_tokens=200*len(pretrain_dataset)*block_size,
-                      #ckpt_path = args.writing_params_path,
-                      num_workers=4)
+    tconf = trainer.TrainerConfig(max_epochs=75, batch_size=256, learning_rate=6e-4, lr_decay=True, warmup_tokens=512*20, final_tokens=200*len(pretrain_dataset)*block_size,num_workers=4)
     ### END CODE HERE
     pass
 
@@ -170,8 +166,8 @@ elif args.function == 'finetune':
 #         model.load_state_dict(torch.load(args.reading_params_path))
 #         model = model.to(device)
     text = dataset.NameDataset(open(args.finetune_corpus_path).read(),pretrain_dataset)
-    my_trainer = trainer.Trainer(model,text,None,tconf)
-    my_trainer.train()
+    trainer = trainer.Trainer(model,text,None,tconf)
+    trainer.train()
     torch.save(model.state_dict(), args.writing_params_path)
     #torch.save(model, args.writing_params_path)
     ### END CODE HERE
