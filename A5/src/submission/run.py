@@ -68,7 +68,7 @@ if args.variant == 'vanilla':
     ###         final_tokens=200*len(pretrain_dataset)*block_size
     ###         num_workers=4
     ### START CODE HERE
-    my_model = model.GPT(mconf)
+    model = model.GPT(mconf)
     tconf = trainer.TrainerConfig(max_epochs=75, 
                       batch_size=256, 
                       learning_rate=6e-4,
@@ -86,7 +86,7 @@ elif args.variant == 'synthesizer':
     ### [part g]: Make some other model here
 
     ### START CODE HERE
-    my_model = model.GPT(mconf)
+    model = model.GPT(mconf)
     tconf = trainer.TrainerConfig(max_epochs=10, 
                       batch_size=256, 
                       learning_rate=6e-4,
@@ -161,12 +161,20 @@ elif args.function == 'finetune':
     ###         num_workers=4
 
     ### START CODE HERE
-    my_trainer = trainer.Trainer(model = my_model, 
-                                     train_dataset = args.finetune_corpus_path,
-                                     test_dataset = None, 
-                                     config = tconf)
+    text = open(args.finetune_corpus_path, 'r').read()
+    if args.reading_params_path is None:
+        my_trainer = trainer.Trainer(model = model, 
+                                         train_dataset = text,
+                                         test_dataset = None, 
+                                         config = tconf)
+    else: 
+        model.load_state_dict(torch.load(args.reading_params_path))
+        my_trainer = trainer.Trainer(model = model, 
+                                         train_dataset = text,
+                                         test_dataset = None, 
+                                         config = tconf)
     my_trainer.train()
-    #my_trainer.save_checkpoint()
+    torch.save(model.state_dict(), args.writing_params_path)
     ### END CODE HERE
     pass
 
