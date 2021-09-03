@@ -165,10 +165,7 @@ elif args.function == 'finetune':
                 corruption_dataset)
     
     if args.reading_params_path is None:
-        my_trainer = trainer.Trainer(model = model.GPT(mconf), 
-                                     text, 
-                                     None, 
-                                     tconf)
+        my_trainer = trainer.Trainer(model,text,None,tconf)
     else: 
         model.load_state_dict(torch.load(args.reading_params_path))
         my_trainer = trainer.Trainer(model,text,None,tconf)
