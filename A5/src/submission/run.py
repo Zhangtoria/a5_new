@@ -165,7 +165,6 @@ elif args.function == 'finetune':
     text = dataset.NameDataset(open(args.finetune_corpus_path).read(),pretrain_dataset)
     
     if args.reading_params_path is None:
-        model = model.GPT(mconf)
         model.to(device)
         my_trainer = trainer.Trainer(model,text,None,tconf)
     else: 
