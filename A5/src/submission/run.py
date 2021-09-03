@@ -161,12 +161,11 @@ elif args.function == 'finetune':
     ###         num_workers=4
 
     ### START CODE HERE
-    if args.reading_params_path is None:
-        trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
-                                     None, tconf)
-    else: trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
-                                 args.reading_params_path, tconf)
-    trainer.train()
+    my_trainer = trainer.Trainer(model = my_model, 
+                                     train_dataset = args.finetune_corpus_path,
+                                     test_dataset = None, 
+                                     config = tconf)
+    my_trainer.train()
     #my_trainer.save_checkpoint()
     ### END CODE HERE
     pass
