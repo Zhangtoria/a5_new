@@ -163,8 +163,8 @@ elif args.function == 'finetune':
     ### START CODE HERE
     #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
     model = model.GPT(mconf)
+    model = model.to(device)
     if args.reading_params_path is not None:
-        device = "cuda:0"
         model.load_state_dict(torch.load(args.reading_params_path))
         model = model.to(device)
     text = dataset.NameDataset(open(args.finetune_corpus_path, encoding='utf-8').read(),pretrain_dataset)
