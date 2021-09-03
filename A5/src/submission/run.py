@@ -163,14 +163,13 @@ elif args.function == 'finetune':
         model = model.GPT(mconf)
         model = model.to(device)
     else: 
-        model = model.GPT(*args, **kwargs)
         model.load_state_dict(torch.load(args.reading_params_path))
         model = model.to(device)
     text = dataset.NameDataset(open(args.finetune_corpus_path, encoding='utf-8').read(),pretrain_dataset)
     my_trainer = trainer.Trainer(model,text,None,tconf)
     my_trainer.train()
     torch.save(model.state_dict(), args.writing_params_path)
-    torch.save(model, args.writing_params_path)
+    #torch.save(model, args.writing_params_path)
     ### END CODE HERE
     pass
 
@@ -179,7 +178,6 @@ elif args.function == 'evaluate':
     assert args.outputs_path is not None
     assert args.reading_params_path is not None
     assert args.eval_corpus_path is not None
-    model = model.GPT(*args, **kwargs)
     model.load_state_dict(torch.load(args.reading_params_path))
     correct = 0
     total = 0
