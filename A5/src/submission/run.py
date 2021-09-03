@@ -75,7 +75,7 @@ if args.variant == 'vanilla':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
-                      ckpt_path = args.writing_params_path,
+                      #ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
@@ -93,7 +93,7 @@ elif args.variant == 'synthesizer':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
-                      ckpt_path = args.writing_params_path,
+                      #ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
@@ -164,7 +164,7 @@ elif args.function == 'finetune':
     text = open(args.finetune_corpus_path, 'r').read()
     
     if args.reading_params_path is None:
-        my_trainer = trainer.Trainer(model, text, None, tconf)
+        my_trainer = trainer.Trainer(model, text, pretrain_dataset, tconf)
     else: 
         model.load_state_dict(torch.load(args.reading_params_path))
         my_trainer = trainer.Trainer(model,text,None,tconf)
