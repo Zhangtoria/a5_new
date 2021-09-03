@@ -68,7 +68,7 @@ if args.variant == 'vanilla':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
-                      ckpt_path = args.writing_params_path,
+                      #ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
@@ -86,7 +86,7 @@ elif args.variant == 'synthesizer':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
-                      ckpt_path = args.writing_params_path,
+                      #ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
