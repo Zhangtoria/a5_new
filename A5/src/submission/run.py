@@ -161,7 +161,7 @@ elif args.function == 'finetune':
     #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
     if args.reading_params_path is None:
         model = model.GPT(mconf)
-        model = model.to(device)
+        #model = model.to(device)
     else: 
         model.load_state_dict(torch.load(args.reading_params_path))
         model = model.to(device)
