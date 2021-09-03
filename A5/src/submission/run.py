@@ -157,7 +157,7 @@ elif args.function == 'finetune':
     my_trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
                                  args.reading_params_path, tconf)
     my_trainer.train()
-    my_trainer.save_checkpoint()
+    #my_trainer.save_checkpoint()
     ### END CODE HERE
     pass
 
