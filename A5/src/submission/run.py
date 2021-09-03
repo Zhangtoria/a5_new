@@ -161,7 +161,8 @@ elif args.function == 'finetune':
     ###         num_workers=4
 
     ### START CODE HERE
-    text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
+    #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
+    text = CharCorruptionDataset(open(args.finetune_corpus_path, encoding='utf-8').read(), 128)
     
     if args.reading_params_path is None:
         my_trainer = trainer.Trainer(model,text,None,tconf)
