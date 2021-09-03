@@ -68,7 +68,7 @@ if args.variant == 'vanilla':
     ###         final_tokens=200*len(pretrain_dataset)*block_size
     ###         num_workers=4
     ### START CODE HERE
-    model = model.GPT(mconf)
+    #model = model.GPT(mconf)
     tconf = trainer.TrainerConfig(max_epochs=75, 
                       batch_size=256, 
                       learning_rate=6e-4,
@@ -86,7 +86,7 @@ elif args.variant == 'synthesizer':
     ### [part g]: Make some other model here
 
     ### START CODE HERE
-    model = model.GPT(mconf)
+    #model = model.GPT(mconf)
     tconf = trainer.TrainerConfig(max_epochs=10, 
                       batch_size=256, 
                       learning_rate=6e-4,
@@ -162,17 +162,13 @@ elif args.function == 'finetune':
 
     ### START CODE HERE
     #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
-    text = dataset.NameDataset(open(args.finetune_corpus_path).read(),pretrain_dataset)
-    
-    if args.reading_params_path is None:
-        model = model.to(device)
-        my_trainer = trainer.Trainer(model,text,None,tconf)
-    else: 
+    model = model.GPT(mconf)
+    if args.reading_params_path is not None:
         device = "cuda:0"
         model.load_state_dict(torch.load(args.reading_params_path))
         model = model.to(device)
-        my_trainer = trainer.Trainer(model,text,None,tconf)
-    
+    text = dataset.NameDataset(open(args.finetune_corpus_path).read(),pretrain_dataset)
+    my_trainer = trainer.Trainer(model,text,None,tconf)
     my_trainer.train()
     
     torch.save(model.state_dict(), args.writing_params_path)
