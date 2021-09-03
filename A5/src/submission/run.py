@@ -162,7 +162,7 @@ elif args.function == 'finetune':
 
     ### START CODE HERE
     #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
-    text = dataset.CharCorruptionDataset(open(args.finetune_corpus_path, encoding='utf-8').read(), 128)
+    text = dataset.NameDataset(open(args.finetune_corpus_path, encoding='utf-8').read())
     
     if args.reading_params_path is None:
         my_trainer = trainer.Trainer(model,text,None,tconf)
