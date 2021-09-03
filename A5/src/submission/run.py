@@ -179,6 +179,7 @@ elif args.function == 'evaluate':
     assert args.outputs_path is not None
     assert args.reading_params_path is not None
     assert args.eval_corpus_path is not None
+    model = model.GPT(*args, **kwargs)
     model.load_state_dict(torch.load(args.reading_params_path))
     correct = 0
     total = 0
