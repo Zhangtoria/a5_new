@@ -68,6 +68,7 @@ if args.variant == 'vanilla':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
+                      ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
@@ -85,6 +86,7 @@ elif args.variant == 'synthesizer':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
+                      ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
@@ -152,9 +154,10 @@ elif args.function == 'finetune':
     ###         num_workers=4
 
     ### START CODE HERE
-    my_trainer = trainer.Trainer(model, args.finetune_corpus_path,
+    my_trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
                                  args.reading_params_path, tconf)
     my_trainer.train()
+    my_trainer.save_checkpoint()
     ### END CODE HERE
     pass
 
