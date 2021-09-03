@@ -161,10 +161,14 @@ elif args.function == 'finetune':
     ###         num_workers=4
 
     ### START CODE HERE
-    text = open(args.finetune_corpus_path, 'r').read()
+    text = NameDataset(open(args.finetune_corpus_path, encoding='utf-8').read(),
+                corruption_dataset)
     
     if args.reading_params_path is None:
-        my_trainer = trainer.Trainer(model, text, pretrain_dataset, tconf)
+        my_trainer = trainer.Trainer(model = model.GPT(mconf), 
+                                     text, 
+                                     None, 
+                                     tconf)
     else: 
         model.load_state_dict(torch.load(args.reading_params_path))
         my_trainer = trainer.Trainer(model,text,None,tconf)
