@@ -161,12 +161,12 @@ elif args.function == 'finetune':
     ###         num_workers=4
 
     ### START CODE HERE
-    text = open(args.finetune_corpus_path, encoding='utf-8').read()
+    text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
     
     if args.reading_params_path is None:
         my_trainer = trainer.Trainer(model,text,None,tconf)
     else: 
-        model.load_state_dict(torch.load(args.reading_params_path))
+        model = model.load_state_dict(torch.load(args.reading_params_path))
         my_trainer = trainer.Trainer(model,text,None,tconf)
     
     my_trainer.train()
