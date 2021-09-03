@@ -162,18 +162,15 @@ elif args.function == 'finetune':
 
     ### START CODE HERE
     text = open(args.finetune_corpus_path, 'r').read()
+    
     if args.reading_params_path is None:
-        my_trainer = trainer.Trainer(model = model, 
-                                         train_dataset = text,
-                                         test_dataset = None, 
-                                         config = tconf)
+        my_trainer = trainer.Trainer(model, text, None, tconf)
     else: 
         model.load_state_dict(torch.load(args.reading_params_path))
-        my_trainer = trainer.Trainer(model = model, 
-                                         train_dataset = text,
-                                         test_dataset = None, 
-                                         config = tconf)
+        my_trainer = trainer.Trainer(model,text,None,tconf)
+    
     my_trainer.train()
+    
     torch.save(model.state_dict(), args.writing_params_path)
     ### END CODE HERE
     pass
