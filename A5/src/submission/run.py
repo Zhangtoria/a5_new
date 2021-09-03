@@ -59,7 +59,14 @@ if args.variant == 'vanilla':
 
     ### TODO:
     ### [part c]: Make some model here
-
+    ###     Hyperparameters for finetuning WITHOUT a pretrained model:
+    ###         max_epochs=75
+    ###         batch_size=256
+    ###         learning_rate=6e-4
+    ###         lr_decay=True
+    ###         warmup_tokens=512*20
+    ###         final_tokens=200*len(pretrain_dataset)*block_size
+    ###         num_workers=4
     ### START CODE HERE
     my_model = model.GPT(mconf)
     tconf = trainer.TrainerConfig(max_epochs=75, 
@@ -68,7 +75,7 @@ if args.variant == 'vanilla':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
-                      #ckpt_path = args.writing_params_path,
+                      ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
@@ -86,7 +93,7 @@ elif args.variant == 'synthesizer':
                       lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
-                      #ckpt_path = args.writing_params_path,
+                      ckpt_path = args.writing_params_path,
                       num_workers=4)
     ### END CODE HERE
     pass
@@ -155,11 +162,11 @@ elif args.function == 'finetune':
 
     ### START CODE HERE
     if args.reading_params_path is None:
-        my_trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
+        trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
                                      None, tconf)
-    else: my_trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
+    else: trainer = trainer.Trainer(my_model, args.finetune_corpus_path,
                                  args.reading_params_path, tconf)
-    my_trainer.train()
+    trainer.train()
     #my_trainer.save_checkpoint()
     ### END CODE HERE
     pass
