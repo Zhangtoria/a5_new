@@ -69,6 +69,7 @@ if args.variant == 'vanilla':
     ###         num_workers=4
     ### START CODE HERE
     #model = model.GPT(mconf)
+    model = model.GPT(mconf)
     tconf = trainer.TrainerConfig(max_epochs=75, batch_size=256, learning_rate=6e-4, lr_decay=True, 
                       warmup_tokens=512*20, 
                       final_tokens=200*len(pretrain_dataset)*block_size,
@@ -84,6 +85,8 @@ elif args.variant == 'synthesizer':
 
     ### START CODE HERE
     #model = model.GPT(mconf)
+    model.load_state_dict(torch.load(args.reading_params_path))
+    model = model.to(device)
     tconf = trainer.TrainerConfig(max_epochs=10, 
                       batch_size=256, 
                       learning_rate=6e-4,
@@ -159,12 +162,12 @@ elif args.function == 'finetune':
 
     ### START CODE HERE
     #text = open(args.finetune_corpus_path, 'w', encoding='utf-8').read()
-    if args.reading_params_path is None:
-        model = model.GPT(mconf)
-        #model = model.to(device)
-    else: 
-        model.load_state_dict(torch.load(args.reading_params_path))
-        model = model.to(device)
+#     if args.reading_params_path is None:
+#         model = model.GPT(mconf)
+#         #model = model.to(device)
+#     else: 
+#         model.load_state_dict(torch.load(args.reading_params_path))
+#         model = model.to(device)
     text = dataset.NameDataset(open(args.finetune_corpus_path, encoding='utf-8').read(),pretrain_dataset)
     my_trainer = trainer.Trainer(model,text,None,tconf)
     my_trainer.train()
