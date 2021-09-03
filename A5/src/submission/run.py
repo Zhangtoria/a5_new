@@ -77,7 +77,7 @@ if args.variant == 'vanilla':
                                   lr_decay=True, 
                                   warmup_tokens=512*20,
                                   final_tokens=200*len(pretrain_dataset)*block_size,
-                                  num_workers=4)
+                                  num_workers=1)
     ### END CODE HERE
     pass
 
@@ -170,13 +170,6 @@ elif args.function == 'finetune':
 #     else: 
 #         model.load_state_dict(torch.load(args.reading_params_path))
 #         model = model.to(device)
-    tconf = trainer.TrainerConfig(max_epochs=75, 
-                                  batch_size=256, 
-                                  learning_rate=6e-4, 
-                                  lr_decay=True, 
-                                  warmup_tokens=512*20,
-                                  final_tokens=200*len(pretrain_dataset)*block_size,
-                                  num_workers=4)
     train_dataset = dataset.NameDataset(open(args.finetune_corpus_path, 
                                     encoding='utf-8').read(),pretrain_dataset)
     trainer = trainer.Trainer(model, train_dataset, None, tconf)
